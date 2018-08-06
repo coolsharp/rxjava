@@ -4,6 +4,7 @@ import io.reactivex.Observable
 import io.reactivex.Observable.create
 import io.reactivex.ObservableEmitter
 import io.reactivex.ObservableOnSubscribe
+import io.reactivex.functions.Consumer
 import io.reactivex.schedulers.Schedulers
 import org.junit.Test
 
@@ -31,5 +32,19 @@ class ExampleUnitTest {
             emitter.onComplete()
         }
         ).subscribe(System.out::println)
+    }
+
+    @Test
+    fun test_from_array() {
+        val arr = intArrayOf(100, 200, 300)
+
+        val source = Observable.fromArray(arr)
+        source.subscribe(object: Consumer<IntArray?> {
+            override fun accept(t: IntArray?) {
+                for (x: Int in t!!) {
+                    System.out.println(x)
+                }
+            }
+        })
     }
 }
